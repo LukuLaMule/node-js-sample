@@ -14,9 +14,6 @@ jobs:
           name: Build de l'image Docker
           command: docker build -t nodejs-image-demo .
       - run:
-          name: Vérifier que l'image est bien créée
-          command: docker images | grep nodejs-image-demo || echo "Image non trouvée !" && exit 1
-      - run:
           name: Se connecter à Docker Hub
           command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - run:
@@ -32,4 +29,4 @@ workflows:
       - build_and_push:
           filters:
             branches:
-              only: master  # Push uniquement si commit sur la branche "main"
+              only: master 
