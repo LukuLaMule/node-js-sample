@@ -20,8 +20,9 @@ jobs:
           name: test de l’image Docker
           command: |
             docker run -d -p 8080:8080 nodejs-image-demo
+            sleep 5
             curl -sSf http://localhost:8080
-            
+
 
       - run:
           name: Tag et push de l’image Docker
