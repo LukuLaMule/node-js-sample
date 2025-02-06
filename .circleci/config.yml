@@ -13,23 +13,26 @@ jobs:
       - run:
           name: Build Docker Image
           command: docker build -t nodejs-image-demo .
-      - run:
-          name: Vérifier que l'image a bien été créée
-          command: docker images | grep nodejs-image-demo
 
-  run_container:
+  push:
     executor: machine-executor
     steps:
       - checkout
       - run:
-          name: Lancer le conteneur
-          command: docker run -d -p 8080:8080 nodejs-image-demo
+          name: Se connecter à Docker Hub
+          command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - run:
+          name: Tag et push de l’image Docker
+          command: |
+            docker tag nodejs-image-demo:latest $DOCKER_USERNAME/nodejs-image-demo:latest
+            docker push $DOCKER_USERNAME/nodejs-image-demo:latest
+
 
 workflows:
   version: 2
   build_and_run:
     jobs:
       - build
-      - run_container:
+      - push:
           requires:
             - build
