@@ -10,5 +10,5 @@ workflows:
       - docker/publish:
           docker-password: DOCKER_PASSWORD
           docker-username: DOCKER_USERNAME
-          image: $DOCKERHUB_USERNAME/nodejs-image-demo
+          image: $DOCKERHUB_USERNAME/nodejs-image-demo:latest
          
