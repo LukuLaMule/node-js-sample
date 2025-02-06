@@ -11,4 +11,4 @@ workflows:
           docker-password: DOCKER_PASSWORD
           docker-username: DOCKER_USERNAME
           image: $DOCKERHUB_USERNAME/nodejs-image-demo
-          tag: 0.1.$CIRCLE_BUILD_NUM
+         
