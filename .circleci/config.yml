@@ -17,10 +17,18 @@ jobs:
           name: Se connecter à Docker Hub
           command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - run:
+          name: test de l’image Docker
+          command: |
+            docker run -d -p 8080:8080 nodejs-image-demo
+            curl -sSf http://localhost:8080
+            
+
+      - run:
           name: Tag et push de l’image Docker
           command: |
             docker tag nodejs-image-demo:latest $DOCKER_USERNAME/nodejs-image-demo:latest
             docker push $DOCKER_USERNAME/nodejs-image-demo:latest
+          
 
 workflows:
   version: 2
