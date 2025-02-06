@@ -1,9 +1,9 @@
-version: 2.1  # Version de configuration CircleCI
+version: 2.1  
 
 jobs:
-  test:  # Nom du job
+  test: 
     docker:
-      - image: circleci/node:14  # Environnement Docker pour le job
+      - image: circleci/node:14  
     steps:
       - checkout  # Clone le repo dans le conteneur
       - run:
@@ -14,7 +14,7 @@ jobs:
           command: npm test
 
 workflows:
-  version: 2
+  version: 2 
   test_and_build:
     jobs:
-      - test  # Exécute le job "test"
+      - test 
