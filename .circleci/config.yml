@@ -10,9 +10,9 @@ jobs:
           name: Installer les dépendances
           command: npm install
       - run:
-          name: Lancer les tests
-          command: npm start
-
+          name: build l'image docker 
+          command: docker run -p 8080:8080 nodejs-image-demo:latest 
+          
 workflows:
   version: 2 
   test_and_build:
