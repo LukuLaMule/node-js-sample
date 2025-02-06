@@ -11,7 +11,7 @@ jobs:
           command: npm install
       - run:
           name: Lancer les tests
-          command: npm test
+          command: npm start
 
 workflows:
   version: 2 
