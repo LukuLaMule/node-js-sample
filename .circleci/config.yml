@@ -24,8 +24,8 @@ jobs:
       - run:
           name: Tag et push de l’image Docker
           command: |
-            docker tag nodejs-image-demo:latest $DOCKER_USERNAME/nodejs-image-demo
-            docker push $DOCKER_USERNAME/nodejs-image-demo
+            docker tag nodejs-image-demo:latest $DOCKER_USERNAME/nodejs-image-demo:latest
+            docker push $DOCKER_USERNAME/nodejs-image-demo:latest
 
 
 workflows:
