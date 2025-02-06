@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@2.5.0  # Utilisation de l'orb officielle Docker
+  docker: circleci/docker@2.8.2 # Utilisation de l'orb officielle Docker
 
 executors:
   machine-executor:
@@ -16,6 +16,7 @@ jobs:
       - docker/build:
           image: $DOCKER_USERNAME/nodejs-image-demo  # Nom de l'image
           tag: latest
+          
       - run:
           name: Forcer le login Docker
           command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
