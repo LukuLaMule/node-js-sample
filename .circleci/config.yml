@@ -1,20 +1,30 @@
-version: 2.1  
+version: 2.1  # Version CircleCI
+
+executors:
+  machine-executor:
+    machine:
+      image: ubuntu-2204:current  # VM Ubuntu 22.04 avec Docker préinstallé
+    working_directory: ~/project
 
 jobs:
-  test: 
-    docker:
-      - image: circleci/node:14  
+  build:
+    executor: machine-executor
     steps:
-      - checkout  # Clone le repo dans le conteneur
+      - checkout  # Clone le repo dans la VM
       - run:
-          name: Installer les dépendances
-          command: npm install
+          name: Vérifier Docker
+          command: docker --version
       - run:
-          name: build l'image docker 
-          command: docker run -p 8080:8080 nodejs-image-demo:latest 
-          
+          name: Build de l'image Docker
+          command: |
+            docker run -p 8080:8080 nodejs-image-demo:latest 
+      - run:
+          name: Lister les images Docker
+          command: docker images
+
+
 workflows:
-  version: 2 
-  test_and_build:
+  version: 2
+  build_and_push:
     jobs:
-      - test 
+      - build
