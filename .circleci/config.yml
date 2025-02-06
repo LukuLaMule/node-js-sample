@@ -1,35 +1,14 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@2.8.2 # Utilisation de l'orb officielle Docker
+  docker: circleci/docker@2.8.2
 
-executors:
-  machine-executor:
-    machine:
-      image: ubuntu-2204:current  # VM complète avec Docker installé
-
-jobs:
-  build_and_push:
-    executor: machine-executor
-    steps:
-      - checkout  # Clone le repo dans CircleCI
-      - docker/build:
-          image: $DOCKER_USERNAME/nodejs-image-demo  # Nom de l'image
-          tag: latest
-          
-      - run:
-          name: Forcer le login Docker
-          command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
-      - docker/push:
-          image: $DOCKER_USERNAME/nodejs-image-demo  # Push sur Docker Hub 
-          tag: latest
 
 workflows:
-  version: 2
-  build_and_push:
+  build-docker-image:
     jobs:
-      - build_and_push:
-          filters:
-            branches:
-              only: master
+      - docker/publish:
+          docker-password: DOCKERHUB_PASSWORD
+          docker-username: DOCKERHUB_USERNAME
+          image: $DOCKERHUB_USERNAME/nodejs-image-demo
+          tag: 0.1.$CIRCLE_BUILD_NUM
