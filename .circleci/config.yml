@@ -32,4 +32,4 @@ workflows:
       - build_and_push:
           filters:
             branches:
-              only: main  # Push uniquement si commit sur la branche "main"
+              only: master  # Push uniquement si commit sur la branche "main"
