@@ -22,9 +22,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Vérifier si l'image existe avant d'exécuter le conteneur
-          command: docker images | grep nodejs-image-demo
-      - run:
           name: Lancer le conteneur
           command: docker run -d -p 8080:8080 nodejs-image-demo
 
