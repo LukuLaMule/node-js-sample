@@ -3,21 +3,19 @@ version: 2.1
 executors:
   machine-executor:
     machine:
-      image: ubuntu-2204:current  # VM Ubuntu avec Docker installé
+      image: ubuntu-2204:current  # VM avec Docker installé
 
 jobs:
-  build:
+  build_and_push:
     executor: machine-executor
     steps:
-      - checkout
+      - checkout  # Clone le repo dans CircleCI
       - run:
-          name: Build Docker Image
-          command: docker build -t $DOCKER_USERNAME/nodejs-image-demo .
-
-  push:
-    executor: machine-executor
-    steps:
-      - checkout
+          name: Build de l'image Docker
+          command: docker build -t nodejs-image-demo .
+      - run:
+          name: Vérifier que l'image est bien créée
+          command: docker images | grep nodejs-image-demo || echo "Image non trouvée !" && exit 1
       - run:
           name: Se connecter à Docker Hub
           command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -27,12 +25,11 @@ jobs:
             docker tag nodejs-image-demo:latest $DOCKER_USERNAME/nodejs-image-demo:latest
             docker push $DOCKER_USERNAME/nodejs-image-demo:latest
 
-
 workflows:
   version: 2
-  build_and_run:
+  build_and_push:
     jobs:
-      - build
-      - push:
-          requires:
-            - build
+      - build_and_push:
+          filters:
+            branches:
+              only: main  # Push uniquement si commit sur la branche "main"
